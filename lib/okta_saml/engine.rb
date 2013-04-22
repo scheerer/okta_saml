@@ -2,12 +2,8 @@ require 'rubygems'
 require 'ruby-saml'
 
 class ActionController::Base
-  before_filter :authenticate!
-  def authenticate!
-    session[:attempted_path] = request.fullpath
-    unless defined?(current_user) && !current_user.nil?
-      redirect_to saml_init_path
-    end
+  def okta_authenticate!
+    redirect_to saml_init_path
   end
 end
 

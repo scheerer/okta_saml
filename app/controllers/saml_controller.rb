@@ -1,6 +1,4 @@
 class SamlController < ApplicationController
-  skip_before_filter :authenticate!
-
   def init
     request = Onelogin::Saml::Authrequest.new
     redirect_to(request.create(saml_settings))
@@ -9,13 +7,9 @@ class SamlController < ApplicationController
   def consume
     response = Onelogin::Saml::Response.new(params[:SAMLResponse])
     response.settings = saml_settings
+    p response.inspect
     if response.is_valid?
-      current_user = User.find_by_email(response.name_id)
-      # path = session[:attempted_path] ||
-      # session[:attempted_path] = nil
-      # redirect_to path and return
-      logger.info(response.document)
-      render :text => "Authenticated as #{response.inspect}"
+      redirect_to redirect_url(response)
     else
       render :text => "Failure"
     end
@@ -35,5 +29,9 @@ class SamlController < ApplicationController
     settings.authn_context = "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
 
     settings
+  end
+
+  def redirect_url(response)
+    SAML_SETTINGS[:login_success_url]
   end
 end
