@@ -6,7 +6,7 @@ if defined?(Rails)
     # Missing
   end
   SAML_SETTINGS = {
-    :login_success_url => saml[Rails.env]['login_success_url'],
+    # :login_success_url => saml[Rails.env]['login_success_url'],
     :idp_sso_target_url => saml[Rails.env]['idp_sso_target_url'],
     :idp_cert_fingerprint => saml[Rails.env]['idp_cert_fingerprint']
   }

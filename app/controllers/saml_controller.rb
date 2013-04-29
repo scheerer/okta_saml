@@ -1,4 +1,6 @@
 class SamlController < ApplicationController
+  include SessionsHelper
+
   def init
     request = Onelogin::Saml::Authrequest.new
     redirect_to(request.create(saml_settings))
@@ -7,9 +9,13 @@ class SamlController < ApplicationController
   def consume
     response = Onelogin::Saml::Response.new(params[:SAMLResponse])
     response.settings = saml_settings
-    p response.inspect
     if response.is_valid?
-      redirect_to redirect_url(response)
+      # logger.info("Response: " + response.inspect)
+      # logger.info("Name ID: " + response.name_id)
+      @current_user = OktaUser.create_from_okta_response({:email => response.name_id})
+      logger.info(@current_user.inspect)
+      # redirect_to redirect_url
+      render :text => "Authenticated as #{}"
     else
       render :text => "Failure"
     end
@@ -27,11 +33,11 @@ class SamlController < ApplicationController
     settings.name_identifier_format         = "urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified"
     # Optional for most SAML IdPs
     settings.authn_context = "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
-
+    # p "Okta Settings #{settings.inspect}"
     settings
   end
 
-  def redirect_url(response)
+  def redirect_url
     SAML_SETTINGS[:login_success_url]
   end
 end
