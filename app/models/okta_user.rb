@@ -13,8 +13,9 @@ class OktaUser
     p error
   end
 
-  def self.create_from_okta_response(okta_response)
-    user = OktaUser.new(okta_response)
+  def self.retrieve_from_cookie(remember_token)
+    return OktaUser.new(:email => remember_token) unless remember_token.blank?
+    return nil
   end
 
 end
