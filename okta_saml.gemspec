@@ -16,5 +16,5 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
 
   gem.add_dependency "rails",     "~> 3.2.6"
-  gem.add_dependency "ruby-saml", "~> 0.5.3"
+  gem.add_dependency "ruby-saml", "~> 0.7.2"
 end

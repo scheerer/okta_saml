@@ -7,6 +7,10 @@ class ActionController::Base
   def okta_authenticate!
     redirect_to saml_init_path unless signed_in?
   end
+
+  def okta_logout
+    redirect_to saml_logout_path
+  end
 end
 
 module OktaSaml
