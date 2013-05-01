@@ -5,12 +5,14 @@ class ActionController::Base
   include OktaSaml::SessionsHelper
 
   def okta_authenticate!
+    session[:redirect_url] = params[:app_referer] || "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
     redirect_to saml_init_path unless signed_in?
   end
 
   def okta_logout
     redirect_to saml_logout_path
   end
+
 end
 
 module OktaSaml

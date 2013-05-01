@@ -9,7 +9,6 @@ module OktaSaml
     end
 
     def signed_in?
-      p "Check Sign In"
       !current_user.nil?
     end
 

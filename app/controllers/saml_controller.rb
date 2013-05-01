@@ -20,7 +20,6 @@ class SamlController < ApplicationController
   end
 
   def logout
-    p "Saml Logout"
     sign_out
     redirect_to redirect_url
     # request = Onelogin::Saml::Logoutrequest.new
@@ -47,6 +46,11 @@ class SamlController < ApplicationController
   end
 
   def redirect_url
-    SAML_SETTINGS[:login_success_url]
+    session[:redirect_url]
   end
+
+  # Rails override to handle unverified post requests from Okta
+  def handle_unverified_request
+  end
+
 end
