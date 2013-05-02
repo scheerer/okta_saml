@@ -19,6 +19,7 @@ module OktaSaml
     def current_user
       @current_user ||= user_from_remember_token
     end
+    alias_method :okta_user, :current_user
 
     def destroy
       sign_out
