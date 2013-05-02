@@ -5,8 +5,8 @@ if defined?(Rails)
     logger.info("Missing okta_saml.yml file in Rails.root/config")
   end
   SAML_SETTINGS = {
-    :login_success_url => saml[Rails.env]['login_success_url'],
     :idp_sso_target_url => saml[Rails.env]['idp_sso_target_url'],
-    :idp_cert_fingerprint => saml[Rails.env]['idp_cert_fingerprint']
+    :idp_cert_fingerprint => saml[Rails.env]['idp_cert_fingerprint'],
+    :idp_logout_url => saml[Rails.env]['idp_logout_url']
   }
 end
