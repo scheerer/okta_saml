@@ -2,7 +2,7 @@ require 'rubygems'
 require 'ruby-saml'
 
 class ActionController::Base
-  include OktaSaml::SessionsHelper
+  include OktaSaml::SessionHelper
 
   def okta_authenticate!
     session[:redirect_url] = params[:app_referer] || "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
@@ -25,7 +25,7 @@ module OktaSaml
 
     def add_engine_helpers
       ActiveSupport.on_load :action_controller do
-        helper OktaSaml::SessionsHelper
+        helper OktaSaml::SessionHelper
       end
     end
   end
