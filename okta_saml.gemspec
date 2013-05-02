@@ -17,4 +17,5 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "rails",     "~> 3.2.13"
   gem.add_dependency "ruby-saml", "~> 0.7.2"
+  gem.add_development_dependency "rspec-rails"
 end

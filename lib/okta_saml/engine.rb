@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'ruby-saml'
+require_relative 'session_helper'
 
 class ActionController::Base
   include OktaSaml::SessionHelper
