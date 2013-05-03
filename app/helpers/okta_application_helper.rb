@@ -1,5 +1,9 @@
 module OktaApplicationHelper
 
+  def idp_response(params)
+    Onelogin::Saml::Response.new(params[:SAMLResponse])
+  end
+
   def saml_settings(request)
     settings = Onelogin::Saml::Settings.new
 

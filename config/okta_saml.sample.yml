@@ -1,13 +1,9 @@
 # Copy this file to the Config directory of your application.  Do not put your copy here, put it in your application
 
 development:
-  idp_sso_target_url: This is provided by Okta on the General tab under "Embed Link"
+  idp_sso_target_url:  http://www.example.com
   idp_cert_fingerprint: This is created from your certificate.  See the Readme for the command
 
 test:
-  idp_sso_target_url: This is provided by Okta on the General tab under "Embed Link"
-  idp_cert_fingerprint: This is created from your certificate.  See the Readme for the command
-
-acceptance:
-  idp_sso_target_url: This is provided by Okta on the General tab under "Embed Link"
-  idp_cert_fingerprint: This is created from your certificate.  See the Readme for the command
+  idp_sso_target_url: http://www.example.com
+  idp_cert_fingerprint: C5:19:85:D9:47:F1:BE:57:08:20:25:05:08:46:EB:27:F6:CA:B7:83

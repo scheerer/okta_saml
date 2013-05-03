@@ -8,8 +8,8 @@ class SamlController < ApplicationController
   end
 
   def consume
-    response = Onelogin::Saml::Response.new(params[:SAMLResponse])
-    response.settings = saml_settings
+    response = idp_response(params)
+    response.settings = saml_settings(request)
     if response.is_valid?
       sign_in(OktaUser.new({:email => response.name_id}))
       redirect_to redirect_url

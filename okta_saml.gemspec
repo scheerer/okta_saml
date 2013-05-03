@@ -5,8 +5,8 @@ require 'okta_saml/version'
 Gem::Specification.new do |gem|
   gem.name          = "okta_saml"
   gem.version       = OktaSaml::VERSION
-  gem.authors       = ["Jared Branum", "Ed Leung", "Michael Hoitomt", "Luke Fender"]
-  gem.email         = ["jbranum@primedia.com", "eleung@primedia.com", "mhoitomt@primedia.com", "lfender@primedia.com"]
+  gem.authors       = ["Michael Hoitomt", "Jared Branum", "Ed Leung", "Luke Fender"]
+  gem.email         = ["mhoitomt@primedia.com", "jbranum@primedia.com", "eleung@primedia.com", "lfender@primedia.com"]
   gem.description   = %q{The okta_saml gem helps Ruby on Rails applications communicate with Okta}
   gem.summary       = %q{The okta_saml gem helps Ruby on Rails applications communicate with Okta}
   gem.homepage      = "https://github.com/primedia/okta_saml"
