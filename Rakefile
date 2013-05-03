@@ -37,14 +37,14 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
-# require 'rake/testtask'
-# require 'test/unit'
-
-# Rake::TestTask.new(:test) do |t|
-#   t.libs << 'lib'
-#   t.libs << 'test'
-#   t.pattern = 'test/**/*_test.rb'
-#   t.verbose = false
-# end
-
-# task :default => :test
+namespace :gem do
+  task :build do
+    output = IO.popen("gem build okta_saml.gemspec")
+    a = output.readlines
+    a.keep_if{|line| line =~ /File:/}
+    a[0].match(/File:/)
+    filename = $'.strip
+    # puts `echo #{filename}`
+    puts `gem inabox #{filename}`
+  end
+end

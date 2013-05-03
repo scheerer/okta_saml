@@ -8,7 +8,8 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Michael Hoitomt", "Jared Branum", "Ed Leung", "Luke Fender"]
   gem.email         = ["mhoitomt@primedia.com", "jbranum@primedia.com", "eleung@primedia.com", "lfender@primedia.com"]
   gem.description   = %q{The okta_saml gem helps Ruby on Rails applications communicate with Okta}
-  gem.summary       = %q{The okta_saml gem helps Ruby on Rails applications communicate with Okta}
+  gem.summary       = %q{The okta_saml gem helps Ruby on Rails applications communicate with Okta. The gem properly
+                        contstructs the request to Okta and handles the response back from Okta.}
   gem.homepage      = "https://github.com/primedia/okta_saml"
 
   gem.files         = Dir["{app,config,db,lib}/**/*"] + ["LICENSE.txt", "Rakefile", "README.md"]
@@ -18,4 +19,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency "rails",     "~> 3.2.13"
   gem.add_dependency "ruby-saml", "~> 0.7.2"
   gem.add_development_dependency "rspec-rails"
+  gem.add_development_dependency "geminabox"
 end
