@@ -14,8 +14,7 @@ class OktaUser
   end
 
   def self.retrieve_from_cookie(remember_token)
-    return OktaUser.new(:email => remember_token) unless remember_token.blank?
-    return nil
+    OktaUser.new(:email => remember_token) unless remember_token.blank?
   end
 
 end
