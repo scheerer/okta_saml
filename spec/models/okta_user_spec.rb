@@ -7,6 +7,12 @@ describe OktaUser do
         expect(OktaUser.retrieve_from_cookie('')).to be_nil
       end
     end
+
+    context 'when remember_token parameter nil' do
+      it 'returns nil' do
+        expect(OktaUser.retrieve_from_cookie(nil)).to be_nil
+      end
+    end
   end
 end
 
