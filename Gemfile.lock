@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    okta_saml (0.0.5)
+    okta_saml (0.0.6)
       rails (~> 3.2.13)
       ruby-saml (~> 0.7.2)
 
@@ -51,8 +51,7 @@ GEM
     json (1.7.7)
     macaddr (1.6.1)
       systemu (~> 2.5.0)
-    mail (2.5.3)
-      i18n (>= 0.4.0)
+    mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.23)
