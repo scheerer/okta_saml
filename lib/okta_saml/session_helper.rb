@@ -3,7 +3,7 @@ module OktaSaml
     def sign_in(user)
       cookies.signed[:remember_token] = {
         :value => user.email,
-        :expires => 120.minutes.from_now
+        :expires => 3.hours.from_now
       }
       current_user = user
     end
@@ -19,6 +19,7 @@ module OktaSaml
     def current_user
       @current_user ||= user_from_remember_token
     end
+
     alias_method :okta_user, :current_user
 
     def destroy
