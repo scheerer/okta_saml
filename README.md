@@ -1,5 +1,7 @@
 # OktaSaml
 
+[![Code Climate](https://codeclimate.com/repos/5175815b56b1020c56000864/badges/aec34f2ab248de6035e0/gpa.png)](https://codeclimate.com/repos/5175815b56b1020c56000864/feed)
+
 [Okta](http://www.okta.com) is an IDP (Identity Provider) that offers enterprise authentication solutions. Okta works by redirecting visitors to your application to a login page that is hosted by Okta. Upon successful authentication Okta sends a POST request with a SAML payload to a Post Back URL (configured by you at setup). The okta_saml gem helps Ruby on Rails applications communicate with Okta.
 
 It is an engine that adds the following features to your application
