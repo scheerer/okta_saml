@@ -2,6 +2,7 @@ require 'rubygems'
 require 'ruby-saml'
 require "net/http"
 require "uri"
+require "json"
 require_relative 'session_helper'
 
 class ActionController::Base
@@ -19,22 +20,15 @@ class ActionController::Base
       ps_user_id = get_user_id(auth_code)
       email = get_cr3_email(ps_user_id)
 
-      # We know:
-      # * auth_code presence in request
-      # * email (not nil) indicates PS->CR3 mapping exists
-      # * okta_signed_in
-
       if email.present?
         # They have auth_code and mapping already exists (since email present)
         # so log them in.
         sign_in(OktaUser.new({:email => email}))
 
       else # no mapping exists
-
         if signed_in? # if already signed into okta, but does have
-                      # auth_code create the mapping, and log them in.
-          create_ps_to_cr3_mapping(ps_user_id, email)
-          sign_in(OktaUser.new({:email => email}))
+                      # auth_code create the mapping.
+          create_ps_to_cr3_mapping(ps_user_id, current_user.email)
 
         else # since not signed into okta, send them to okta login.
           redirect_to saml_init_path
@@ -48,31 +42,35 @@ class ActionController::Base
   end
 
   def create_ps_to_cr3_mapping(ps_user_id, email)
-    randr_uri = Rails.application.config.randr_service
-    randr_uri += "/portalsvc/proplsol/add-user-mapping?ps-user-id=" + ps_user_id
-    res = http_get(randr_uri) # { "result": "true" } 
-    res.body["email"]
+    randr_uri = randr_uri("/portalsvc/propsol/add-user-mapping")
+    params = {"ps-user-id" => ps_user_id}
+    res = http_get(randr_uri, params)
+    res["result"]
   end
 
   def get_cr3_email(ps_user_id)
-    randr_uri = Rails.application.config.randr_service
-    randr_uri += "/portalsvc/proplsol/get-cr3-user?ps-user-id=" + ps_user_id
-    res = http_get(randr_uri) # { "email": "foo@bar.com" or "" }
-    res.body["email"]
+    randr_uri = randr_uri("/portalsvc/propsol/get-cr3-user")
+    params = {"ps-user-id" => ps_user_id}  # { "email": "foo@bar.com" or "" }
+    res = http_get(randr_uri, params)
+    res["email"]
   end
 
   def get_user_id(auth_code)
-    randr_uri = Rails.application.config.randr_service
-    randr_uri += "/portalsvc/proplsol/get-ps-user-id?auth-code=" + auth_code
-    res = http_get(randr_uri) # { "user-id": "-1" }
-    res.body["user-id"]
+    randr_uri = randr_uri("/portalsvc/propsol/get-ps-user-id")
+    params = {"auth-code" => auth_code}
+    res = http_get(randr_uri, params) # { "user-id": "-1" }
+    res["user-id"]
   end
 
-  def http_get(uri)
-    url = URI.parse(randr_uri)
-    req = Net::HTTP::Get.new(url.path)
-    res = Net::HTTP.start(url.host, url.port) { |http| http.request(req) }
-    puts res.body
+  def http_get(uri, params)
+    uri = URI.parse(uri)
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+    JSON.parse(res.body)
+  end
+
+  def randr_uri(path)
+    uri = Rails.application.config.randr_service + path
   end
 end
 
