@@ -10,7 +10,14 @@ class ActionController::Base
 
   def okta_authenticate!
     session[:redirect_url] = params[:app_referer] || "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
-    auth_code = params[:auth_code]
+    if params[:auth_code] != nil
+      session[:auth_code] = params[:auth_code]
+    end
+    if params[:referrer] != nil
+      session[:referrer] = params[:referrer]
+    end
+
+    auth_code = session[:auth_code]
 
     # if no auth_code from propsol, auth using okta
     if auth_code.blank?
@@ -31,7 +38,7 @@ class ActionController::Base
           create_ps_to_cr3_mapping(ps_user_id, current_user.email)
 
         else # since not signed into okta, send them to okta login.
-          redirect_to saml_init_path
+          redirect_to login_path
         end
       end
     end
