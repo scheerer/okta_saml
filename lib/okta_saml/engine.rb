@@ -43,7 +43,7 @@ class ActionController::Base
 
   def create_ps_to_cr3_mapping(ps_user_id, email)
     randr_uri = randr_uri("/portalsvc/propsol/add-user-mapping")
-    params = {"ps-user-id" => ps_user_id, "cr3-email" email}
+    params = {"ps-user-id" => ps_user_id, "cr3-email" => email}
     res = http_get(randr_uri, params)
     res["result"]
   end
