@@ -14,7 +14,7 @@ class ActionController::Base
 
     # if no auth_code from propsol, auth using okta
     if auth_code.blank?
-      redirect_to saml_init_path unless signed_in?
+      redirect_to login_path unless signed_in?
 
     else
       ps_user_id = get_user_id(auth_code)
