@@ -10,13 +10,9 @@ class ActionController::Base
 
   def okta_authenticate!
     session[:redirect_url] = params[:app_referer] || "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
-    if params[:auth_code] != nil
-      session[:auth_code] = params[:auth_code]
-    end
-    if params[:referrer] != nil
-      session[:referrer] = params[:referrer]
-    end
 
+    session[:referrer]  = params[:referrer]  if params[:referrer]
+    session[:auth_code] = params[:auth_code] if params[:auth_code]
     auth_code = session[:auth_code]
 
     # if no auth_code from propsol, auth using okta
