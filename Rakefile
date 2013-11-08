@@ -23,12 +23,7 @@ end
 APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
 load 'rails/tasks/engine.rake'
 
-
-
-Bundler::GemHelper.install_tasks
-
-Dir[File.join(File.dirname(__FILE__), 'tasks/**/*.rake')].each{|f| load f}
-
+require 'primedia/gem_tasks'
 require 'rspec/core'
 require 'rspec/core/rake_task'
 
@@ -37,14 +32,3 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
-namespace :gem do
-  task :build do
-    output = IO.popen("gem build okta_saml.gemspec")
-    a = output.readlines
-    a.keep_if{|line| line =~ /File:/}
-    a[0].match(/File:/)
-    filename = $'.strip
-    # puts `echo #{filename}`
-    puts `gem inabox #{filename}`
-  end
-end
