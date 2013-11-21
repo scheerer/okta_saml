@@ -20,7 +20,7 @@ module OktaSaml
   class Engine < Rails::Engine
     def initialize
       require "okta_saml/constants"
-      Rails.application.config.session_store :active_record_store, :key => '_my_key', :domain=> :all
+      Rails.application.config.session_store :active_record_store, key: '_my_key', domain: :all
       add_engine_helpers
     end
 

@@ -14,7 +14,7 @@ class OktaUser
   end
 
   def self.retrieve_from_cookie(remember_token)
-    OktaUser.new(remember_token) unless remember_token.blank?
+    self.new(remember_token) unless remember_token.blank?
   end
 
 end
