@@ -22,7 +22,9 @@ describe 'saml controller' do
     before(:each) do
       @redirect_path = "http://www.redirect_path.com"
       @email = "test@test.com"
-      i_response = double("response", {:is_valid? => true, :'settings=' => "", :name_id => @email})
+      @attributes =  {:first_name => "John", :last_name => "Doe"}
+      @issuer = "http://www.example.com/foo/bar"
+      i_response = double("response", {:is_valid? => true, :'settings=' => "", :name_id => @email, :attributes => @attributes, :issuer => @issuer })
       SamlController.any_instance.stub(:idp_response).and_return(i_response)
       SamlController.any_instance.stub(:saml_settings).with(anything()).and_return("")
       SamlController.any_instance.stub(:redirect_url).and_return(@redirect_path)
@@ -33,6 +35,8 @@ describe 'saml controller' do
       response.should be_redirect
       expect(response).to redirect_to(@redirect_path)
       expect(controller.current_user.email).to eq(@email)
+      expect(controller.current_user.attributes).to eq(@attributes)
+      expect(controller.current_user.issuer).to eq(@issuer)
     end
   end
 
